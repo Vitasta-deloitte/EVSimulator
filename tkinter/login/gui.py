@@ -1,12 +1,20 @@
 from pathlib import Path
-
+from functools import partial
 from tkinter import Toplevel, Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox
+
+# import sys
+# sys.path.append('../../')
+# print(sys.__path__)
+# from examples.v20 import login
 
 # from ..main_window.main import mainWindow
 
+import sys
+sys.path.append("/home/snehagrawal5/Downloads/EVSimulator/")
+from examples.v20 import login
+
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
-
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -18,21 +26,23 @@ def loginWindow():
 
 class Login(Toplevel):
 
-    global user
-    # Login check function
+    # global user
+    # # Login check function
     def loginFunc(self):
-        # global user
-        # if checkUser(self.username.get().lower(), self.password.get()):
-        #     user = self.username.get().lower()
-        #     self.destroy()
-        #     # mainWindow()
-        #     return
-        # else:
-            messagebox.showerror(
-                title="Invalid Credentials",
-                message="The username and self.password don't match",
-            )
-
+    #     # global user
+    #     # if checkUser(self.username.get().lower(), self.password.get()):
+    #     #     user = self.username.get().lower()
+    #     #     self.destroy()
+    #     #     # mainWindow()
+    #     #     return
+    #     # else:
+    #         messagebox.showerror(
+    #             title="Invalid Credentials",
+    #             message="The username and self.password don't match",
+    #         )
+        # print("Hi there")
+        login.TooMuchLogin.Too()
+        
     def __init__(self, *args, **kwargs):
 
         Toplevel.__init__(self, *args, **kwargs)
@@ -94,13 +104,15 @@ class Login(Toplevel):
             font=("Montserrat Bold", 26 * -1),
         )
 
+
+        validateLogin = partial(self.loginFunc)
         button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
         button_1 = Button(
             self.canvas,
             image=button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=self.loginFunc,
+            command=validateLogin,
             relief="flat",
         )
         button_1.place(x=641.0, y=412.0, width=190.0, height=48.0)
