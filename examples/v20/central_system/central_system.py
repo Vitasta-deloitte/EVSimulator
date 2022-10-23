@@ -13,30 +13,19 @@ except ModuleNotFoundError:
     sys.exit(1)
 
 import sys
-sys.path.append('../../')
+sys.path.append('../../../')
 from ocpp.routing import on
-from ocpp.v201 import ChargePoint as cp
-from ocpp.v201 import call_result
+from examples.v20.central_system.reservation_request import ChargePoint as cp
+from examples.v20.central_system.onboot_response import ChargePoint as cp1
+from examples.v20.central_system.heartbeat_response import ChargePoint as cp2
+# from examples.v20.central_system.reservationStatusUpdatePayload_request import ChargePoint as cp3
+from ocpp.v201 import call_result , call;
 
 logging.basicConfig(level=logging.INFO)
 
 
-class ChargePoint(cp):
-    @on('BootNotification')
-    def on_boot_notification(self, charging_station, reason, **kwargs):
-        print("call from client")
-        return call_result.BootNotificationPayload(
-            current_time=datetime.utcnow().isoformat(),
-            interval=10,
-            status='Accepted'
-        )
-
-    @on('Heartbeat')
-    def on_heartbeat(self):
-        print('Got a Heartbeat!')
-        return call_result.HeartbeatPayload(
-            current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
-        )
+class ChargePoint(cp,cp1,cp2):
+    pass
 
 
 async def on_connect(websocket, path):
@@ -66,7 +55,7 @@ async def on_connect(websocket, path):
     charge_point_id = path.strip('/')
     cp = ChargePoint(charge_point_id, websocket)
 
-    await cp.start()
+    await asyncio.gather(cp.start(),cp.send_reservation())
 
 
 async def main():
