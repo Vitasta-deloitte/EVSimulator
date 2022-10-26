@@ -1,7 +1,8 @@
 import asyncio
 import logging
 from datetime import datetime
-
+from urllib import response
+now = datetime.now()
 try:
     import websockets
 except ModuleNotFoundError:
@@ -11,13 +12,11 @@ except ModuleNotFoundError:
     print(" $ pip install websockets")
     import sys
     sys.exit(1)
-
 import sys
 sys.path.append('../../../')
 from ocpp.routing import on
 from ocpp.charge_point import ChargePoint as cp
 from ocpp.v201 import call_result , call;
-
 logging.basicConfig(level=logging.INFO)
 
 class ChargePoint(cp):
@@ -28,4 +27,8 @@ class ChargePoint(cp):
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
         )
-    
+
+    @on('StatusNotification')
+    def on_status_notification(self,timestamp, connector_status, evse_id, connector_id):
+        print("return a  status request")
+        return call_result.StatusNotificationPayload()

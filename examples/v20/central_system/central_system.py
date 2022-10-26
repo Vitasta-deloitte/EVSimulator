@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 import sys
 sys.path.append('../../../')
 from ocpp.routing import on
-from examples.v20.central_system.reservation_request import ChargePoint as cp
+from examples.v20.central_system.reservation_module_request import ChargePoint as cp
 from examples.v20.central_system.onboot_response import ChargePoint as cp1
 from examples.v20.central_system.heartbeat_response import ChargePoint as cp2
 from examples.v20.central_system.transaction_module_request import ChargePoint as cp3
@@ -55,7 +55,7 @@ async def on_connect(websocket, path):
     charge_point_id = path.strip('/')
     cp = ChargePoint(charge_point_id, websocket)
 
-    await asyncio.gather(cp.start(),cp.send_reservation(),cp.send_start_transaction(),cp.send_transaction_event(),cp.get_transaction_status(),cp.send_stop_transaction())
+    await asyncio.gather(cp.start(),cp.get_transaction_status(), cp.send_reservation(), cp.send_cancel_reservation())
 
 
 async def main():
