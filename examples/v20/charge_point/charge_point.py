@@ -18,12 +18,13 @@ from ocpp.routing import on
 from examples.v20.charge_point.heartbeat_request import ChargePoint as cp
 from examples.v20.charge_point.onboot_request import ChargePoint as cp1
 from examples.v20.charge_point.reservation_response import ChargePoint as cp2
-# from examples.v20.charge_point.reservationStatusUpdatePayload_response import ChargePoint as cp3
+from examples.v20.charge_point.transaction_module_response import ChargePoint as cp3
+
 from ocpp.v201 import call, call_result
 
 logging.basicConfig(level=logging.INFO)
 
-class ChargePoint(cp,cp1,cp2):
+class ChargePoint(cp,cp1,cp2,cp3):
 
     # async def send_heartbeat(self, interval):
         

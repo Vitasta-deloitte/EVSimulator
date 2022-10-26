@@ -9,9 +9,9 @@ from tkinter import Toplevel, Tk, Canvas, Entry, Text, Button, PhotoImage, messa
 
 # from ..main_window.main import mainWindow
 
-import sys
-sys.path.append("/home/snehagrawal5/Downloads/EVSimulator/")
-from examples.v20 import login
+# import sys
+# sys.path.append("/home/snehagrawal5/Downloads/EVSimulator/")
+# from examples.v20 import login
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
@@ -20,8 +20,8 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-def loginWindow():
-    Login()
+# def loginWindow():
+#     Login()
 
 
 class Login(Toplevel):
@@ -41,7 +41,8 @@ class Login(Toplevel):
     #             message="The username and self.password don't match",
     #         )
         # print("Hi there")
-        login.TooMuchLogin.Too()
+        # login.TooMuchLogin.Too()
+        pass
         
     def __init__(self, *args, **kwargs):
 
