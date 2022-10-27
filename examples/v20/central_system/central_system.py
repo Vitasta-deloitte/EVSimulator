@@ -19,12 +19,13 @@ from examples.v20.central_system.reservation_module_request import ChargePoint a
 from examples.v20.central_system.onboot_response import ChargePoint as cp1
 from examples.v20.central_system.charger_availability_request import ChargePoint as cp2
 from examples.v20.central_system.transaction_module_request import ChargePoint as cp3
+from examples.v20.central_system.diagnostics_module_response import ChargePoint as cp4
 from ocpp.v201 import call_result , call;
 
 logging.basicConfig(level=logging.INFO)
 
 
-class ChargePoint(cp,cp1,cp2,cp3):
+class ChargePoint(cp,cp1,cp2,cp3,cp4):
     pass
 
 
@@ -55,7 +56,7 @@ async def on_connect(websocket, path):
     charge_point_id = path.strip('/')
     cp = ChargePoint(charge_point_id, websocket)
 
-    await asyncio.gather(cp.start(),cp.get_transaction_status(), cp.send_reservation(), cp.send_cancel_reservation(),cp.get_charger_availability())
+    await asyncio.gather(cp.start())
 
 
 async def main():

@@ -22,18 +22,18 @@ logging.basicConfig(level=logging.INFO)
 class ChargePoint(cp):
 
     @on('Heartbeat')
-    def on_heartbeat(self):
+    def on_charger_availability_heartbeat(self):
         print('Got a Heartbeat!')
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
         )
 
     @on('StatusNotification')
-    def on_status_notification(self,timestamp, connector_status, evse_id, connector_id):
+    def on_charger_availability_status_notification(self,timestamp, connector_status, evse_id, connector_id):
         print("return a  status request")
         return call_result.StatusNotificationPayload()
 
-    async def get_charger_availability(self):
+    async def get_charger_availability_change_availability(self):
         request = call.ChangeAvailabilityPayload(
             operational_status="Inoperative")
         response = await self.call(request)
@@ -41,6 +41,6 @@ class ChargePoint(cp):
         print(response)
     
     @on('NotifyEvent')
-    def on_notify_event_request(self,generated_at, seq_no, event_data):
+    def on_charger_availability_notify_event_request(self,generated_at, seq_no, event_data):
         print("return notify event request")
         return call_result.NotifyEventPayload()

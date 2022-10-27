@@ -19,12 +19,13 @@ from examples.v20.charge_point.charger_availability_response import ChargePoint 
 from examples.v20.charge_point.onboot_request import ChargePoint as cp1
 from examples.v20.charge_point.reservation_module_response import ChargePoint as cp2
 from examples.v20.charge_point.transaction_module_response import ChargePoint as cp3
+from examples.v20.charge_point.diagnostics_module_request import ChargePoint as cp4
 
 from ocpp.v201 import call, call_result
 
 logging.basicConfig(level=logging.INFO)
 
-class ChargePoint(cp,cp1,cp2,cp3):
+class ChargePoint(cp,cp1,cp2,cp3,cp4):
     pass
 
 async def main():
@@ -36,7 +37,7 @@ async def main():
         cp = ChargePoint('CP_231', ws)
         print("hit it", ws )
         print(type(ws))
-        await asyncio.gather(cp.start(), cp.send_boot_notification(),cp.send_start_transaction(), cp.send_transaction_event(), cp.send_stop_transaction(), cp.send_reservation_ended(),cp.send_notify_event_request())
+        await asyncio.gather(cp.start())
 
 
 if __name__ == "__main__":

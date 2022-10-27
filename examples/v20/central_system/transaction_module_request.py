@@ -24,7 +24,7 @@ class ChargePoint(cp):
 
 
     @on('RequestStartTransaction')
-    def on_start_transaction(self,id_token,remote_start_id):
+    def on_transaction_start_transaction(self,id_token,remote_start_id):
         print("Receive for Starting Transaction")
         return call_result.RequestStartTransactionPayload(
             status= "Accepted",
@@ -41,7 +41,7 @@ class ChargePoint(cp):
     #     print(response)
 
     @on('RequestStopTransaction')
-    def on_stop_transaction(self,transaction_id):
+    def on_transaction_stop_transaction(self,transaction_id):
         print("Receive for stopping Transaction")
         return call_result.RequestStopTransactionPayload(
         status= "Accepted"
@@ -54,7 +54,7 @@ class ChargePoint(cp):
     #     print(response)
     
     @on('TransactionEvent')
-    def on_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info):
+    def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info):
         print("Receive for a Event Transaction")
         return call_result.TransactionEventPayload(
             total_cost= None,
@@ -75,7 +75,7 @@ class ChargePoint(cp):
     #     print("Call for Event Transaction")
     #     print(response)
 
-    async def get_transaction_status(self):
+    async def get_transaction_transaction_status(self):
         request = call.GetTransactionStatusPayload(
             transaction_id="2")
         response = await self.call(request)
