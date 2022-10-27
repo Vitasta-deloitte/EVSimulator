@@ -32,3 +32,15 @@ class ChargePoint(cp):
     def on_status_notification(self,timestamp, connector_status, evse_id, connector_id):
         print("return a  status request")
         return call_result.StatusNotificationPayload()
+
+    async def get_charger_availability(self):
+        request = call.ChangeAvailabilityPayload(
+            operational_status="Inoperative")
+        response = await self.call(request)
+        print("Call for status of charger availability")
+        print(response)
+    
+    @on('NotifyEvent')
+    def on_notify_event_request(self,generated_at, seq_no, event_data):
+        print("return notify event request")
+        return call_result.NotifyEventPayload()

@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 import sys 
 sys.path.append('../../../')
 from ocpp.routing import on
-from examples.v20.charge_point.heartbeat_request import ChargePoint as cp
+from examples.v20.charge_point.charger_availability_response import ChargePoint as cp
 from examples.v20.charge_point.onboot_request import ChargePoint as cp1
 from examples.v20.charge_point.reservation_module_response import ChargePoint as cp2
 from examples.v20.charge_point.transaction_module_response import ChargePoint as cp3
@@ -36,7 +36,7 @@ async def main():
         cp = ChargePoint('CP_231', ws)
         print("hit it", ws )
         print(type(ws))
-        await asyncio.gather(cp.start(), cp.send_boot_notification(),cp.send_start_transaction(), cp.send_transaction_event(), cp.send_stop_transaction(), cp.send_reservation_ended())
+        await asyncio.gather(cp.start(), cp.send_boot_notification(),cp.send_start_transaction(), cp.send_transaction_event(), cp.send_stop_transaction(), cp.send_reservation_ended(),cp.send_notify_event_request())
 
 
 if __name__ == "__main__":
