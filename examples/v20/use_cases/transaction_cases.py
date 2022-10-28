@@ -7,5 +7,5 @@ from examples.v20.charge_point.charge_point import ChargePoint as cp99
 import asyncio
 import websockets
 
-var=['new1.start()','new1.send_transaction_event("Started","1666775586","CablePluggedIn",1,"1")']
+var=['new1.send_transaction_event("Started","1666775586","CablePluggedIn",1,"1")','new1.send_boot_notification()']
 asyncio.run(nw(var))

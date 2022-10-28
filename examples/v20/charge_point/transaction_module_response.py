@@ -21,7 +21,8 @@ from ocpp.v201 import call, call_result
 logging.basicConfig(level=logging.INFO)
 
 class ChargePoint(cp):
- 
+    
+    #Extra
     async def send_start_transaction(self):
         request = call.RequestStartTransactionPayload(
             id_token={ "idToken": "001681020001", "type": "Central" },
@@ -31,6 +32,7 @@ class ChargePoint(cp):
         print("Call for starting Transaction")
         print(response)
 
+    #Extra
     async def send_stop_transaction(self):
         request = call.RequestStopTransactionPayload(
             transaction_id = "1")
