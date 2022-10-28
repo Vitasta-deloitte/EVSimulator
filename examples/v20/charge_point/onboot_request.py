@@ -32,7 +32,7 @@ class ChargePoint(cp):
         )
         response = await self.call(request)
 
-        if response.status == 'Accepted':
-            print("Connected to central system.")
-            # await self.on_reservation()
-            await self.send_heartbeat(response.interval)
+        # if response.status == 'Accepted':
+        #     print("Connected to central system.")
+        #     # await self.on_reservation()
+        #     await self.send_boot_notification(response.interval)
