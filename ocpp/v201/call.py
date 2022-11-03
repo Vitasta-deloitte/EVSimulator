@@ -402,7 +402,7 @@ class TransactionEventPayload:
     reservation_id: Optional[int] = None
     evse: Optional[Dict] = None
     id_token: Optional[Dict] = None
-
+    
 
 @dataclass
 class TriggerMessagePayload:

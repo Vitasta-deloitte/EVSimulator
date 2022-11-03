@@ -36,3 +36,5 @@ class ChargePoint(cp):
         print("reservation ended")
         request = call.ReservationStatusUpdatePayload(reservation_id=1,reservation_update_status="Expired")
         response = await self.call(request)
+        print("----------------------------------------------",response)
+        return response

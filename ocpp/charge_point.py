@@ -86,6 +86,8 @@ class ChargePoint:
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
+    requestResponse={}
+    actionUnique={}
     def __init__(self, id, connection, response_timeout=30):
         """
 
@@ -122,12 +124,18 @@ class ChargePoint:
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
-
+    
     async def start(self):
         while True:
             message = await self._connection.recv()
+            messages=message.split(",")
+            uniqueId="".join(list(messages[1])[1:-1])
+            if uniqueId not in self.requestResponse:
+                self.requestResponse[uniqueId]=[]
+                self.requestResponse[uniqueId].append(message)
+            else:
+                self.requestResponse[uniqueId].append(message)
             LOGGER.info('%s: receive message %s', self.id, message)
-
             await self.route_message(message)
 
     async def route_message(self, raw_msg):
@@ -321,5 +329,16 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
+        response=message.split(",")
+        uniqueId="".join(list(response[1])[1:-1])
+        nameOfTheEvent="".join(list(response[2][1:-1]))
+        # print("+++++++++++++++++++++++++++++++++++++++++++++++++++",list(response[2]))
+        # self.l1.append(uniqueId)
+        if uniqueId not in self.requestResponse:
+            self.requestResponse[uniqueId]=[]
+            self.requestResponse[uniqueId].append(message)
+        else:
+            self.requestResponse[uniqueId].append(message)
+        self.actionUnique[nameOfTheEvent]=uniqueId
         LOGGER.info('%s: send %s', self.id, message)
         await self._connection.send(message)

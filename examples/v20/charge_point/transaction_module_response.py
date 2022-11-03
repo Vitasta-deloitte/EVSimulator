@@ -40,17 +40,21 @@ class ChargePoint(cp):
         print("Call for stopping Transaction")
         print(response)
 
-    async def send_transaction_event(self, event_type,timestamp,trigger_reason,seq_no,transactionId):
+    async def send_transaction_event(self, event_type,timestamp,trigger_reason,seq_no,transactionId,offline):
         request = call.TransactionEventPayload(
             event_type= event_type,
             timestamp= timestamp,
             trigger_reason = trigger_reason,
             seq_no = seq_no,
-            transaction_info= {"transactionId":transactionId}
+            transaction_info= {"transactionId":transactionId},
+            offline=offline
             )
         response = await self.call(request)
         print("Call for Event Transaction")
         print(response)
+        # return call.TransactionEventPayload.event_type
+        # return "Started"
+
 
     @on('GetTransactionStatus')
     def on_get_transaction_status(self, transaction_id):

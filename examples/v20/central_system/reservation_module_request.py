@@ -46,4 +46,4 @@ class ChargePoint(cp):
     @on('ReservationStatusUpdate')
     def on_reservation_ended(self ,reservation_id,reservation_update_status):
         if(reservation_update_status=="Expired"):
-            return call_result.ReservationStatusUpdatePayload();
+            return call_result.ReservationStatusUpdatePayload()

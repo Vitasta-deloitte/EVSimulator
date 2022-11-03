@@ -28,8 +28,8 @@ class ChargePoint(cp):
         print("Receive for Starting Transaction")
         return call_result.RequestStartTransactionPayload(
             status= "Accepted",
-            status_info = None,
-            transaction_id =None
+            transaction_id ="1",
+            status_info = None
         )
 
     @on('RequestStopTransaction')
@@ -40,10 +40,10 @@ class ChargePoint(cp):
         )
     
     @on('TransactionEvent')
-    def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info):
+    def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info,offline):
         print("Receive for a Event Transaction")
         return call_result.TransactionEventPayload(
-            total_cost= None,
+            total_cost= 1,
             charging_priority = None,
             id_token_info= None,
             updated_personal_message = None
