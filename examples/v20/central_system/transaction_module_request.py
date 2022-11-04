@@ -42,11 +42,17 @@ class ChargePoint(cp):
     @on('TransactionEvent')
     def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info,offline):
         print("Receive for a Event Transaction")
+        total_cost= None
+        charging_priority = None
+        id_token_info= None
+        updated_personal_message = None
+        if event_type=="Started" and trigger_reason=="EVDetected":
+            total_cost=1
         return call_result.TransactionEventPayload(
-            total_cost= 1,
-            charging_priority = None,
-            id_token_info= None,
-            updated_personal_message = None
+            total_cost= total_cost,
+            charging_priority = charging_priority,
+            id_token_info= id_token_info,
+            updated_personal_message = updated_personal_message
         )
 
     async def get_transaction_transaction_status(self):

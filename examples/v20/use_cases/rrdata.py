@@ -1,20 +1,13 @@
 import sys
 sys.path.append('../../../')
 # import examples.v20.charge_point.charge_point
-from examples.v20.use_cases.testing_csms import conn, func
+from examples.v20.use_cases.mainCp import conn, func
+# from examples.v20.use_cases.user import var
 
 import asyncio
 import websockets
 import json
 
-event_type="Started"
-timestamp="1666775586"
-trigger_reason="CablePluggedIn"
-seq_no=1
-transactionId="1"
-offline=True
-
-var=[f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{seq_no},"{transactionId}",{offline})',f'charge_point_connection.send_start_transaction()',f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{34},"{transactionId}",{offline})']
 async def ss(action):
     while True:
 
@@ -31,12 +24,21 @@ async def ss(action):
 
 
 async def repeat_until_eternity():
+
+    #Data value is passed as var which is imported from user.py via main function
     task1=asyncio.create_task(conn(var))
+
+    #All the tasks are created here whether it is CSMS to CP or CP to CSMS
     asyncio.create_task(ss("ReserveNow"))
-    asyncio.create_task(ss("RequestStartTransaction"))
+    # asyncio.create_task(ss("RequestStartTransaction"))
     asyncio.create_task(ss("TransactionEvent"))
     await asyncio.wait([task1])
 
-asyncio.run(repeat_until_eternity())
+def main(var1):
+    global var
+    var=var1
+    asyncio.run(repeat_until_eternity())
+
+
 
 
