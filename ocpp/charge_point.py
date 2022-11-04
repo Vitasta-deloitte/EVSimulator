@@ -128,11 +128,13 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            messages=message.split(",")
-            uniqueId="".join(list(messages[1])[1:-1])
+            response=message.split(",")
+            uniqueId="".join(list(response[1])[1:-1])
+            nameOfTheEvent="".join(list(response[2][1:-1]))
             if uniqueId not in self.requestResponse:
                 self.requestResponse[uniqueId]=[]
                 self.requestResponse[uniqueId].append(message)
+                self.actionUnique[nameOfTheEvent]=uniqueId
             else:
                 self.requestResponse[uniqueId].append(message)
             LOGGER.info('%s: receive message %s', self.id, message)
@@ -332,13 +334,12 @@ class ChargePoint:
         response=message.split(",")
         uniqueId="".join(list(response[1])[1:-1])
         nameOfTheEvent="".join(list(response[2][1:-1]))
-        # print("+++++++++++++++++++++++++++++++++++++++++++++++++++",list(response[2]))
-        # self.l1.append(uniqueId)
         if uniqueId not in self.requestResponse:
             self.requestResponse[uniqueId]=[]
             self.requestResponse[uniqueId].append(message)
+            self.actionUnique[nameOfTheEvent]=uniqueId
         else:
             self.requestResponse[uniqueId].append(message)
-        self.actionUnique[nameOfTheEvent]=uniqueId
+        
         LOGGER.info('%s: send %s', self.id, message)
         await self._connection.send(message)

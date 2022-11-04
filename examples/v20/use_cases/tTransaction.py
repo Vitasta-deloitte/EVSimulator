@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../../../')
 # import examples.v20.charge_point.charge_point
-from examples.v20.use_cases.testing import conn, func
+from examples.v20.use_cases.testing_csms import conn, func
 
 import asyncio
 import websockets
@@ -14,9 +14,7 @@ seq_no=1
 transactionId="1"
 offline=True
 
-var=[f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{seq_no},"{transactionId}",{offline})',f'charge_point_connection.send_start_transaction()']
-# var=[f'charge_point_connection.send_start_transaction()']
-
+var=[f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{seq_no},"{transactionId}",{offline})',f'charge_point_connection.send_start_transaction()',f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{34},"{transactionId}",{offline})']
 async def ss(action):
     while True:
 
@@ -30,14 +28,15 @@ async def ss(action):
         finalListResponse=json.loads(acceptRequestResponse[acceptActionUnique[action]][1][openResponse:closeResponse+1])
         print("Request: ", finalListRequest)
         print("Response: ",finalListResponse)
-        
 
-async def repeat_until_eternity(var):
+
+async def repeat_until_eternity():
     task1=asyncio.create_task(conn(var))
+    asyncio.create_task(ss("ReserveNow"))
     asyncio.create_task(ss("RequestStartTransaction"))
     asyncio.create_task(ss("TransactionEvent"))
     await asyncio.wait([task1])
 
-asyncio.run(repeat_until_eternity(var))
+asyncio.run(repeat_until_eternity())
 
 

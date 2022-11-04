@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../../../')
 # import examples.v20.charge_point.charge_point
-from examples.v20.use_cases.testing import conn, func
+from examples.v20.use_cases.testing_cp import conn, func
 
 import asyncio
 import websockets

@@ -40,7 +40,8 @@ async def nw():
         # while i<len(var):
         #     var[i]=eval(var[i])
         #     i+=1
-        await asyncio.gather(new1.start(),new1.send_reservation_ended())
+        # await asyncio.gather(new1.start(),new1.send_reservation_ended())
+        await asyncio.gather(new1.start())
         
 
 if __name__ == "__main__":

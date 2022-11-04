@@ -20,7 +20,8 @@ from examples.v20.central_system.onboot_response import ChargePoint as cp1
 from examples.v20.central_system.charger_availability_request import ChargePoint as cp2
 from examples.v20.central_system.transaction_module_request import ChargePoint as cp3
 from examples.v20.central_system.diagnostics_module_response import ChargePoint as cp4
-from ocpp.v201 import call_result , call;
+from ocpp.v201 import call_result , call
+from examples.v20.use_cases.csmsToCp import var as variable
 
 logging.basicConfig(level=logging.INFO)
 
@@ -55,8 +56,12 @@ async def on_connect(websocket, path):
 
     charge_point_id = path.strip('/')
     cp = ChargePoint(charge_point_id, websocket)
-
-    await asyncio.gather(cp.start())
+    i=0
+    actions=[]
+    while i<len(variable):
+        actions.append(eval(variable[i]))
+        i+=1
+    await asyncio.gather(cp.start(), *actions)
 
 
 async def main():
