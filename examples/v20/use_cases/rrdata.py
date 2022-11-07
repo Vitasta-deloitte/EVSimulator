@@ -31,8 +31,8 @@ async def repeat_until_eternity():
 
     task1=asyncio.create_task(conn(var))
     # asyncio.create_task(ss("ReservationStatusUpdate"))
-    # asyncio.create_task(ss("ReserveNow"))
-    asyncio.create_task(ss("CancelReservation"))
+    asyncio.create_task(ss("ReserveNow"))
+    # asyncio.create_task(ss("CancelReservation"))
     await asyncio.wait([task1])
 
 def main(var1):
