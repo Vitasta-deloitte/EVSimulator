@@ -20,21 +20,50 @@ logging.basicConfig(level=logging.INFO)
 class ChargePoint(cp):
 
     @on('ReserveNow')
-    def on_reservation(self , id , expiry_date_time, id_token,connector_type):
+    def on_reservation(self , id , expiry_date_time, id_token,connector_type,evse_id,group_id_token):
+
         print("receive for a reservation")
-        return call_result.ReserveNowPayload(
-            status="Accepted"
-        )
+
+        #Reserve a unspecified EVSE at a Charging Station
+        if id!=0:  
+            if connector_type:
+            #     if evse_id==0:
+            #         return call_result.ReserveNowPayload(
+            #         status="Accepted"
+            # )
+            #     if id_token:
+            #         return call_result.ReserveNowPayload(
+            #         status="Accepted"
+            # )
+                return call_result.ReserveNowPayload(
+                    status="Accepted"
+                )
+            else:
+                if evse_id==0:
+                   return call_result.ReserveNowPayload(
+                    status="Accepted"
+            )
+                else:
+                    return  call_result.ReserveNowPayload(
+                    status="Faulted"
+            )
+        else:
+            return call_result.ReserveNowPayload(
+                    status="Faulted"
+            )
 
     @on('CancelReservation')
     def on_cancel_reservation(self , reservation_id):
-        print("cancel reservation is call from csms to cp")
-        return call_result.CancelReservationPayload(status="Accepted")
+        if reservation_id:
+            print("cancel reservation is call from csms to cp")
+            return call_result.CancelReservationPayload(status="Accepted")
+        else:
+            return call_result.CancelReservationPayload(status="Rejected")
 
 #initiate rservation ended
-    async def send_reservation_ended(self):
+    async def send_reservation_ended(self,reservation_id, reservation_update_status):
         print("reservation ended")
-        request = call.ReservationStatusUpdatePayload(reservation_id=1,reservation_update_status="Expired")
+        request = call.ReservationStatusUpdatePayload(reservation_id=reservation_id,reservation_update_status=reservation_update_status)
         response = await self.call(request)
         print("----------------------------------------------",response)
         return response

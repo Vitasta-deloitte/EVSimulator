@@ -1,1 +1,0 @@
-var=[f'cp.send_reservation()']

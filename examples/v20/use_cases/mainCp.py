@@ -7,8 +7,6 @@ import sys
 sys.path.append('../../../')
 from examples.v20.charge_point.charge_point import ChargePoint
 
-
-
 async def repeat_until_eternity(charge_point_connection):
     while True:
         global returnRequestResponse, returnActionUnique
