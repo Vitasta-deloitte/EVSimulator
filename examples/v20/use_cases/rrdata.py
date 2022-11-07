@@ -20,11 +20,19 @@ async def ss(action):
         finalListResponse=json.loads(acceptRequestResponse[acceptActionUnique[action]][1][openResponse:closeResponse+1])
         print("Request: ", finalListRequest)
         print("Response: ",finalListResponse)
-        if 'status' in finalListResponse.keys():
-            if finalListResponse['status']=='Accepted':
+        if action=="ReserveNow":
+            if 'connectorType' in finalListRequest.keys() and 'status' in finalListResponse.keys():
+                if finalListRequest['connectorType'] not in ["Unknown", "Undetermined"] and finalListResponse['status']=='Accepted':
+                    await asyncio.create_task(ss("StatusNotification"))
+                else:
+                    print("Status: ", "Rejected")
+            
+            
+        if action=="CancelReservation":
+            if 'status' in finalListResponse.keys() and finalListResponse['status']=='Accepted':
                 await asyncio.create_task(ss("StatusNotification"))
             else:
-                print("Status: ", "Rejected")
+                    print("Status: ", "Rejected")
 
 
 async def repeat_until_eternity():
