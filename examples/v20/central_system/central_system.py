@@ -24,6 +24,7 @@ from examples.v20.central_system.status_notification_request import ChargePoint 
 from ocpp.v201 import call_result , call
 from examples.v20.use_cases.csmsToCpForReservation import var as variable
 from examples.v20.use_cases.csmsToCpForStatusNotification import var as variable1
+from examples.v20.use_cases.csmsToCpForDiagnostic import variable as variable2
 
 logging.basicConfig(level=logging.INFO)
 
@@ -65,6 +66,8 @@ async def on_connect(websocket, path):
         allActions.append(variable1[i])
     for i in range(len(variable)):
         allActions.append(variable[i])
+    for i in range(len(variable2)):
+        allActions.append(variable2[i])
     while i<len(allActions):
         actions.append(eval(allActions[i]))
         i+=1

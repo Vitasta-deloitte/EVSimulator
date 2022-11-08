@@ -26,8 +26,6 @@ async def ss(action):
                     await asyncio.create_task(ss("StatusNotification"))
                 else:
                     print("Status: ", "Rejected")
-            
-            
         if action=="CancelReservation":
             if 'status' in finalListResponse.keys() and finalListResponse['status']=='Accepted':
                 await asyncio.create_task(ss("StatusNotification"))
@@ -39,8 +37,19 @@ async def repeat_until_eternity():
 
     task1=asyncio.create_task(conn(var))
     # asyncio.create_task(ss("ReservationStatusUpdate"))
-    asyncio.create_task(ss("ReserveNow"))
+    # asyncio.create_task(ss("ReserveNow"))
     # asyncio.create_task(ss("CancelReservation"))
+    # asyncio.create_task(ss("GetLog"))
+    asyncio.create_task(ss("LogStatusNotification"))
+    # asyncio.create_task(ss("GetMonitoringReport"))
+    # asyncio.create_task(ss("SetMonitoringBase"))
+    # asyncio.create_task(ss("SetVariableMonitoring"))
+    # asyncio.create_task(ss("NotifyMonitoringReport"))
+    # asyncio.create_task(ss("SetMonitoringLevel"))
+    # asyncio.create_task(ss("ClearVariableMonitoring"))
+    # asyncio.create_task(ss("NotifyEvent"))
+    # asyncio.create_task(ss("CustomerInformation"))
+    # asyncio.create_task(ss("NotifyCustomerInformation"))
     await asyncio.wait([task1])
 
 def main(var1):
