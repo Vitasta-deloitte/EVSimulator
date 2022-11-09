@@ -40,7 +40,7 @@ class ChargePoint(cp):
         )
     
     @on('TransactionEvent')
-    def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info,number_of_phases_used,cable_max_current,reservation_id,evse,id_token,offline):
+    def on_transaction_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transaction_info,number_of_phases_used,cable_max_current,reservation_id,evse,id_token,offline,meter_value):
         print("Receive for a Event Transaction")
         total_cost= None
         charging_priority = None

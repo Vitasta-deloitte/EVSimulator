@@ -50,7 +50,7 @@ async def repeat_until_eternity():
     # asyncio.create_task(ss("NotifyEvent"))
     # asyncio.create_task(ss("CustomerInformation"))
     # asyncio.create_task(ss("NotifyCustomerInformation"))
-    # asyncio.create_task(ss("TransactionEvent"))
+    asyncio.create_task(ss("TransactionEvent"))
     await asyncio.wait([task1])
 
 def main(var1):

@@ -21,7 +21,7 @@ from examples.v20.charge_point.reservation_module_response import ChargePoint as
 from examples.v20.charge_point.transaction_module_response import ChargePoint as cp3
 from examples.v20.charge_point.diagnostics_module_request import ChargePoint as cp4
 from examples.v20.charge_point.status_notification_response import ChargePoint as cp5
-
+import datetime as date
 from ocpp.v201 import call, call_result
 
 logging.basicConfig(level=logging.INFO)

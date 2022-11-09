@@ -40,7 +40,7 @@ class ChargePoint(cp):
         print("Call for stopping Transaction")
         print(response)
 
-    async def send_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transactionId,number_of_phases_used,cable_max_current,reservation_id,evse,id_token,offline):
+    async def send_transaction_event(self,event_type,timestamp,trigger_reason,seq_no,transactionId,number_of_phases_used,cable_max_current,reservation_id,evse,id_token,offline,meter_value):
         request = call.TransactionEventPayload(
             event_type= event_type,
             timestamp= timestamp,
@@ -52,7 +52,8 @@ class ChargePoint(cp):
             reservation_id=reservation_id,
             evse=evse,
             id_token=id_token,
-            offline=offline
+            offline=offline,
+            meter_value=meter_value
             )
         response = await self.call(request)
         print("Call for Event Transaction")
