@@ -40,7 +40,7 @@ async def repeat_until_eternity():
     # asyncio.create_task(ss("ReserveNow"))
     # asyncio.create_task(ss("CancelReservation"))
     # asyncio.create_task(ss("GetLog"))
-    asyncio.create_task(ss("LogStatusNotification"))
+    # asyncio.create_task(ss("LogStatusNotification"))
     # asyncio.create_task(ss("GetMonitoringReport"))
     # asyncio.create_task(ss("SetMonitoringBase"))
     # asyncio.create_task(ss("SetVariableMonitoring"))
@@ -50,6 +50,7 @@ async def repeat_until_eternity():
     # asyncio.create_task(ss("NotifyEvent"))
     # asyncio.create_task(ss("CustomerInformation"))
     # asyncio.create_task(ss("NotifyCustomerInformation"))
+    # asyncio.create_task(ss("TransactionEvent"))
     await asyncio.wait([task1])
 
 def main(var1):
