@@ -7,6 +7,8 @@ import websockets
 import json
 
 async def ss(action):
+    global energy_required
+    energy_required=0
     while True:
         await asyncio.sleep(10)
         global acceptActionUnique,acceptRequestResponse, finalListRequest, finalListResponse
@@ -17,8 +19,8 @@ async def ss(action):
         closeResponse=acceptRequestResponse[acceptActionUnique[action]][1].rindex('}')
         finalListRequest=json.loads(acceptRequestResponse[acceptActionUnique[action]][0][openRequest:closeRequest+1])
         finalListResponse=json.loads(acceptRequestResponse[acceptActionUnique[action]][1][openResponse:closeResponse+1])
-        print("Request: ", finalListRequest)
-        print("Response: ",finalListResponse)
+        # print("Request: ", finalListRequest)
+        # print("Response: ",finalListResponse)
         # asyncio.run(reserva(action,finalListRequest,finalListResponse))
         if action=="ReserveNow":
             if 'connectorType' in finalListRequest.keys() and 'status' in finalListResponse.keys():
@@ -32,11 +34,19 @@ async def ss(action):
             else:
                     print("Status: ", "Rejected")
         if action=="NotifyEVChargingNeeds":
-            energy_remaining=finalListRequest["chargingNeeds"]["dcChargingParameters"]["energyAmount"]
+            if energy_required:
+                energy_required=energy_required-1000
+            else:
+                energy_required=finalListRequest["chargingNeeds"]["dcChargingParameters"]["energyAmount"]
             max_energy=finalListRequest["chargingNeeds"]["dcChargingParameters"]["evEnergyCapacity"]
-            # charge_remaining_in_the_vehicle=100-energy_remaining
-            # if charge_remaining_in_the_vehicle>0:
-            #     print("Energy Needed to fully charge: ",max_energy-charge_remaining_in_the_vehicle)
+            energy_remaining=max_energy-energy_required
+            max_charging_done=(max_energy*80/100)
+            if energy_remaining<=max_charging_done:
+                max_energy_provided=max_charging_done-energy_remaining
+                print("Energy that can be provided to the user for getting the value to 80%: ", max_energy_provided)
+            else:
+                print("Vehicle already charged upto 80% or above and hence charging is stopped")
+                break
             
                 
 
@@ -59,6 +69,7 @@ async def repeat_until_eternity():
     # asyncio.create_task(ss("CustomerInformation"))
     # asyncio.create_task(ss("NotifyCustomerInformation"))
     # asyncio.create_task(ss("TransactionEvent"))
+
     asyncio.create_task(ss("NotifyEVChargingNeeds"))
     await asyncio.wait([task1])
 
