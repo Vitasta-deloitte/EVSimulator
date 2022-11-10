@@ -15,13 +15,13 @@ except ModuleNotFoundError:
 import sys 
 sys.path.append('../../../')
 from ocpp.routing import on
-from examples.v20.charge_point.charger_availability_response import ChargePoint as cp
-from examples.v20.charge_point.onboot_request import ChargePoint as cp1
-from examples.v20.charge_point.reservation_module_response import ChargePoint as cp2
-from examples.v20.charge_point.transaction_module_response import ChargePoint as cp3
-from examples.v20.charge_point.diagnostics_module_request import ChargePoint as cp4
-from examples.v20.charge_point.status_notification_response import ChargePoint as cp5
-from examples.v20.charge_point.notify_ev_charging_needs_response import ChargePoint as cp6
+from examples.v20.charge_point.charger_availability_cp import ChargePoint as cp
+from examples.v20.charge_point.onboot_cp import ChargePoint as cp1
+from examples.v20.charge_point.reservation_module_cp import ChargePoint as cp2
+from examples.v20.charge_point.transaction_module_cp import ChargePoint as cp3
+from examples.v20.charge_point.diagnostics_module_cp import ChargePoint as cp4
+from examples.v20.charge_point.status_notification_cp import ChargePoint as cp5
+from examples.v20.charge_point.notify_ev_charging_needs_cp import ChargePoint as cp6
 
 logging.basicConfig(level=logging.INFO)
 

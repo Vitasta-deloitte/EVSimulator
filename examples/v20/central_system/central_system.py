@@ -15,13 +15,13 @@ except ModuleNotFoundError:
 import sys
 sys.path.append('../../../')
 from ocpp.routing import on
-from examples.v20.central_system.reservation_module_request import ChargePoint as cp
-from examples.v20.central_system.onboot_response import ChargePoint as cp1
-from examples.v20.central_system.charger_availability_request import ChargePoint as cp2
-from examples.v20.central_system.transaction_module_request import ChargePoint as cp3
-from examples.v20.central_system.diagnostics_module_response import ChargePoint as cp4
-from examples.v20.central_system.status_notification_request import ChargePoint as cp5
-from examples.v20.central_system.notify_ev_charging_needs_request import ChargePoint as cp6
+from examples.v20.central_system.reservation_module_cs import ChargePoint as cp
+from examples.v20.central_system.onboot_cs import ChargePoint as cp1
+from examples.v20.central_system.charger_availability_cs import ChargePoint as cp2
+from examples.v20.central_system.transaction_module_cs import ChargePoint as cp3
+from examples.v20.central_system.diagnostics_module_cs import ChargePoint as cp4
+from examples.v20.central_system.status_notification_cs import ChargePoint as cp5
+from examples.v20.central_system.notify_ev_charging_needs_cs import ChargePoint as cp6
 from examples.v20.use_cases.csmsToCpForReservation import var as variable
 from examples.v20.use_cases.csmsToCpForStatusNotification import var as variable1
 from examples.v20.use_cases.csmsToCpForDiagnostic import variable as variable2

@@ -53,8 +53,6 @@ async def ss(action):
                 if "content" in finalListResponse["updatedPersonalMessage"] and finalListResponse["updatedPersonalMessage"]["content"]=="Disconnected":
                     break
             
-                
-
 
 async def repeat_until_eternity():
 
