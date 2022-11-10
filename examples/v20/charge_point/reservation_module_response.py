@@ -1,16 +1,4 @@
-import asyncio
-from doctest import master
 import logging
-from urllib import request
-try:
-    import websockets
-except ModuleNotFoundError:
-    print("This example relies on the 'websockets' package.")
-    print("Please install it by running: ")
-    print()
-    print(" $ pip install websockets")
-    import sys
-    sys.exit(1)
 import sys 
 sys.path.append('../../../')
 from ocpp.routing import on
@@ -27,14 +15,6 @@ class ChargePoint(cp):
         #Reserve a unspecified EVSE at a Charging Station
         if id!=0:  
             if connector_type:
-            #     if evse_id==0:
-            #         return call_result.ReserveNowPayload(
-            #         status="Accepted"
-            # )
-            #     if id_token:
-            #         return call_result.ReserveNowPayload(
-            #         status="Accepted"
-            # )
                 return call_result.ReserveNowPayload(
                     status="Accepted"
                 )

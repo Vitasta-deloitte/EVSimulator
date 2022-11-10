@@ -18,15 +18,26 @@ meter_value=[{"timestamp":"1666775586","sampledValue":[{"value":2}]}]
 def transactionValues():
     global var
     var=[]
-    var.append(f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{seq_no},{transaction_info},{number_of_phases_used},{cable_max_current},{reservation_id},{evse},{id_token},{offline},{meter_value})')
+    var=[f'charge_point_connection.send_transaction_event("{event_type}","{timestamp}","{trigger_reason}",{seq_no},{transaction_info},{number_of_phases_used},{cable_max_current},{reservation_id},{evse},{id_token},{offline},{meter_value})']
 
 
 # S1: EV connected
-event_type="Started"
-transaction_info["charging_state"]="EVConnected"
+# event_type="Started"
+# transaction_info["charging_state"]="EVConnected"
+# transactionValues()
 
-# S2: Battery Percentage
+# S2 and S3: For battery percentage and continuous evaluation of battery
+def statusNotificationCases():
+    global var
+    var=[f'charge_point_connection.send_notify_ev_charging_needs_payload({energyAmount},{evEnergyCapacity})']
 
+energyAmount=3500
+evEnergyCapacity=5000
+# statusNotificationCases()
 
+# S4: User Disconnected the EV 
+transaction_info={"transaction_id":"2","charging_state":"EVConnected","stoppedReason":"EVDisconnected"}
 transactionValues()
+
+
 main(var)

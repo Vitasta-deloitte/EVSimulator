@@ -3,7 +3,6 @@ sys.path.append('../../../')
 from examples.v20.use_cases.mainCp import conn, func
 
 import asyncio
-import websockets
 import json
 
 async def ss(action):
@@ -19,20 +18,21 @@ async def ss(action):
         closeResponse=acceptRequestResponse[acceptActionUnique[action]][1].rindex('}')
         finalListRequest=json.loads(acceptRequestResponse[acceptActionUnique[action]][0][openRequest:closeRequest+1])
         finalListResponse=json.loads(acceptRequestResponse[acceptActionUnique[action]][1][openResponse:closeResponse+1])
-        # print("Request: ", finalListRequest)
-        # print("Response: ",finalListResponse)
-        # asyncio.run(reserva(action,finalListRequest,finalListResponse))
+        print("Request: ", finalListRequest)
+        print("Response: ",finalListResponse)
         if action=="ReserveNow":
             if 'connectorType' in finalListRequest.keys() and 'status' in finalListResponse.keys():
                 if finalListRequest['connectorType'] not in ["Unknown", "Undetermined"] and finalListResponse['status']=='Accepted':
                     await asyncio.create_task(ss("StatusNotification"))
                 else:
                     print("Status: ", "Rejected")
+
         if action=="CancelReservation":
             if 'status' in finalListResponse.keys() and finalListResponse['status']=='Accepted':
                 await asyncio.create_task(ss("StatusNotification"))
             else:
                     print("Status: ", "Rejected")
+
         if action=="NotifyEVChargingNeeds":
             if energy_required:
                 energy_required=energy_required-1000
@@ -47,6 +47,11 @@ async def ss(action):
             else:
                 print("Vehicle already charged upto 80% or above and hence charging is stopped")
                 break
+
+        if action=="TransactionEvent":
+            if "updatedPersonalMessage" in finalListResponse:
+                if "content" in finalListResponse["updatedPersonalMessage"] and finalListResponse["updatedPersonalMessage"]["content"]=="Disconnected":
+                    break
             
                 
 
@@ -54,9 +59,11 @@ async def ss(action):
 async def repeat_until_eternity():
 
     task1=asyncio.create_task(conn(var))
+
     # asyncio.create_task(ss("ReservationStatusUpdate"))
-    # asyncio.create_task(ss("ReserveNow"))
+    asyncio.create_task(ss("ReserveNow"))
     # asyncio.create_task(ss("CancelReservation"))
+
     # asyncio.create_task(ss("GetLog"))
     # asyncio.create_task(ss("LogStatusNotification"))
     # asyncio.create_task(ss("GetMonitoringReport"))
@@ -68,9 +75,10 @@ async def repeat_until_eternity():
     # asyncio.create_task(ss("NotifyEvent"))
     # asyncio.create_task(ss("CustomerInformation"))
     # asyncio.create_task(ss("NotifyCustomerInformation"))
-    # asyncio.create_task(ss("TransactionEvent"))
 
-    asyncio.create_task(ss("NotifyEVChargingNeeds"))
+
+    # asyncio.create_task(ss("TransactionEvent"))
+    # asyncio.create_task(ss("NotifyEVChargingNeeds"))
     await asyncio.wait([task1])
 
 

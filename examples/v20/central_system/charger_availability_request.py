@@ -1,17 +1,6 @@
-import asyncio
 import logging
 from datetime import datetime
-from urllib import response
 now = datetime.now()
-try:
-    import websockets
-except ModuleNotFoundError:
-    print("This example relies on the 'websockets' package.")
-    print("Please install it by running: ")
-    print()
-    print(" $ pip install websockets")
-    import sys
-    sys.exit(1)
 import sys
 sys.path.append('../../../')
 from ocpp.routing import on

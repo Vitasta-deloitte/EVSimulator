@@ -1,4 +1,3 @@
-
 var=[]
 timestamp="1666775586"
 connector_status="Available"
