@@ -46,8 +46,38 @@ class ChargePoint(cp):
         charging_priority = None
         id_token_info= None
         updated_personal_message = None
-        if event_type=="Started" and trigger_reason=="EVDetected":
-            total_cost=1
+        # if event_type=="Started" and trigger_reason=="EVDetected":
+        #     total_cost=1
+        # return call_result.TransactionEventPayload(
+        #     total_cost= total_cost,
+        #     charging_priority = charging_priority,
+        #     id_token_info= id_token_info,
+        #     updated_personal_message = updated_personal_message
+        # )
+        # if event_type=="Started" and trigger_reason=="EVDetected" :
+        #     pass
+        # if event_type=="Started" and trigger_reason=="CablePluggedIn" and transaction_info["chargingState"]=="EVConnected":
+        #     pass
+        # if event_type=="Started" and trigger_reason=="Authorized":
+        #     # id_token_info = {"status":"Accepted"}
+        #     pass
+        # if event_type=="Started" and trigger_reason=="SignedDataReceived":
+        #     pass
+        # if event_type=="Started" and trigger_reason=="ChargingStateChanged" and transaction_info["chargingState"]=="Charging":
+        #     pass
+        # print("+++++++++++++++++++++++++++++++++++",event_type, trigger_reason, transaction_info["charging_state"])
+        # if event_type == "Started" and trigger_reason == "CablePluggedIn" and transaction_info["charging_state"] == "EVConnected":
+        #     id_token_info={"status":"Accepted"}
+        # else:
+        #     id_token_info={"status":"Blocked"}
+        # if event_type=="Started" and trigger_reason=="CablePluggedIn" and transaction_info["chargingState"]=="EVConnected":
+        #     pass
+        # if event_type=="Updated" and trigger_reason=="Authorized":
+        #     pass
+        # if event_type=="Updated" and trigger_reason=="ChargingStateChanged":
+        #     pass
+        # if event_type=="Ended" and trigger_reason == "EVConnectTimeout":
+        #     pass
         return call_result.TransactionEventPayload(
             total_cost= total_cost,
             charging_priority = charging_priority,

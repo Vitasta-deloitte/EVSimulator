@@ -21,6 +21,7 @@ from examples.v20.central_system.charger_availability_request import ChargePoint
 from examples.v20.central_system.transaction_module_request import ChargePoint as cp3
 from examples.v20.central_system.diagnostics_module_response import ChargePoint as cp4
 from examples.v20.central_system.status_notification_request import ChargePoint as cp5
+from examples.v20.central_system.notify_ev_charging_needs_request import ChargePoint as cp6
 from ocpp.v201 import call_result , call
 from examples.v20.use_cases.csmsToCpForReservation import var as variable
 from examples.v20.use_cases.csmsToCpForStatusNotification import var as variable1
@@ -29,7 +30,7 @@ from examples.v20.use_cases.csmsToCpForDiagnostic import variable as variable2
 logging.basicConfig(level=logging.INFO)
 
 
-class ChargePoint(cp,cp1,cp2,cp3,cp4,cp5):
+class ChargePoint(cp,cp1,cp2,cp3,cp4,cp5,cp6):
     pass
 
 
