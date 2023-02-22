@@ -11,10 +11,9 @@ class ChargePoint(cp):
     def on_reservation(self , id , expiry_date_time, id_token,connector_type,evse_id,group_id_token):
 
         print("receive for a reservation")
-
         #Reserve a unspecified EVSE at a Charging Station
         if id!=0:  
-            if connector_type:
+            if connector_type!="Unknown":
                 return call_result.ReserveNowPayload(
                     status="Accepted"
                 )

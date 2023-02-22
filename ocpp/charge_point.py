@@ -42,7 +42,6 @@ def camel_to_snake_case(data):
 
     return data
 
-
 def snake_to_camel_case(data):
     """
     Convert all keys of a all dictionaries inside given argument from
@@ -69,7 +68,6 @@ def snake_to_camel_case(data):
         return camel_case_list
 
     return data
-
 
 def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
     if isinstance(data, dict):
@@ -126,7 +124,7 @@ class ChargePoint:
         self._unique_id_generator = uuid.uuid4
     
     async def start(self):
-        while True:
+        # while True:
             message = await self._connection.recv()
             response=message.split(",")
             uniqueId="".join(list(response[1])[1:-1])
@@ -139,6 +137,8 @@ class ChargePoint:
                 self.requestResponse[uniqueId].append(message)
             LOGGER.info('%s: receive message %s', self.id, message)
             await self.route_message(message)
+            # break
+            await self._connection.close()
 
     async def route_message(self, raw_msg):
         """

@@ -1,26 +1,9 @@
-from datetime import datetime as dt
+import sys
+import asyncio
+sys.path.append('../../../')
+from examples.v20.use_cases.websocketSync import sync_client_server_websocket
 
-
-id= 1
-expiry_date_time= "12/10/22"
-id_token={ "idToken": "001681020001", "type": "Central" }
-connector_type= "cCCS1"
-evse_id= 1
-group_id_token= {"idToken":"22","type":"Central"}
-var=[]
-
-#S1 - Reserve a unspecified EVSE at a Charging Station
-id=1
-evse_id=0
-
-#S2 - Reserve a specified EVSE at a Charging Station
-# connector_type="Unknown"
-
-# #S3 - Reserve a connector type at a Charging Station
-# connector_type="Unknown"
-# evse_id=0
-
-##Comparing date
+# Comparing date
 # date="12/09/22"
 # a = dt.strptime(expiry_date_time, "%d/%m/%y")
 # b = dt.strptime(date, "%d/%m/%y")
@@ -29,8 +12,14 @@ evse_id=0
 #     expiry_date_time=expiry_date_time
 # else:
 #     id=0
+def reservation(id, connector_type, evse_id,expiry_date_time, id_token, group_id_token):
+    var=[]
+    var.append(f'charge_point_connection.send_reservation({id},"{expiry_date_time}",{id_token},"{connector_type}",{evse_id},{group_id_token})')
+    return asyncio.run(sync_client_server_websocket(var,[]))
 
-var.append(f'cp.send_reservation({id},"{expiry_date_time}",{id_token},"{connector_type}",{evse_id},{group_id_token})')
-var=""
-# reservation_id=1
-# var.append(f'cp.send_cancel_reservation({reservation_id})')
+
+
+def cancel_reservation(reservation_id):
+    var=[]
+    var.append(f'charge_point_connection.send_cancel_reservation({reservation_id})')
+    return asyncio.run(sync_client_server_websocket(var,[]))

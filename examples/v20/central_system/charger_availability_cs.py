@@ -22,9 +22,11 @@ class ChargePoint(cp):
         print("return a  status request")
         return call_result.StatusNotificationPayload()
 
-    async def get_charger_availability_change_availability(self):
+    async def get_charger_availability_change_availability(self, operational_status,evse):
         request = call.ChangeAvailabilityPayload(
-            operational_status="Inoperative")
+            operational_status=operational_status,
+            evse=evse
+            )
         response = await self.call(request)
         print("Call for status of charger availability")
         print(response)

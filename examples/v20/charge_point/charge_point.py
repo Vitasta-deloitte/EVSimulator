@@ -27,15 +27,3 @@ logging.basicConfig(level=logging.INFO)
 
 class ChargePoint(cp,cp1,cp2,cp3,cp4,cp5,cp6):
     pass
-
-async def nw():
-    async with websockets.connect(
-        'ws://localhost:9000/CP_1',
-        subprotocols=['ocpp2.0']
-    ) as ws:
-        new1 = ChargePoint('CP_231', ws)
-        await asyncio.gather(new1.start())
-        
-
-if __name__ == "__main__":
-    asyncio.run(nw())

@@ -25,9 +25,13 @@ class ChargePoint(cp):
             await self.call(request)
             await asyncio.sleep(interval)
 
-    async def send_charger_availability_notification_request(self):
+    async def send_charger_availability_notification_request(self,timestamp,connector_status,evse_id, connector_id):
         # Available ,Occupied ,Reserved, Unavailable, Faulted
-        request = call.StatusNotificationPayload(timestamp= datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z", connector_status= "Available", evse_id= 1, connector_id= 1)
+        request = call.StatusNotificationPayload(
+            timestamp= timestamp, 
+            connector_status= connector_status, 
+            evse_id= evse_id, 
+            connector_id= connector_id)
         response = await self.call(request)
     
     @on('ChangeAvailability')
@@ -37,22 +41,10 @@ class ChargePoint(cp):
             status="Accepted"
         )
     
-    async def send_charger_availability_notify_event_request(self):
+    async def send_charger_availability_notify_event_request(self,generated_at,seq_no,event_data):
         request = call.NotifyEventPayload(
-            generated_at= datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z",
-            seq_no= 0,
-            event_data=[{
-                'eventId':1, 
-            "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z", 
-            "trigger":"Alerting", 
-            "actualValue":"2",
-            "eventNotificationType":"CustomMonitor",
-            "component":{
-                "name":"Sneh"
-                },
-            "variable":{
-                "name":"Sneh"
-            }
-            }]
+            generated_at= generated_at,
+            seq_no= seq_no,
+            event_data=event_data
         )
         response = await self.call(request)

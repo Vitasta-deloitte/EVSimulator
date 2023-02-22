@@ -1,31 +1,42 @@
-variable =[]
+import sys
+import asyncio
+sys.path.append('../../../')
+from examples.v20.use_cases.websocketSync import sync_client_server_websocket
 def diagnosticGetLogRequest(log, log_type, request_id):
-    var = f'cp.get_diagnostic_log_request({log},"{log_type}",{request_id})'
-    variable.append(var)
+    variable =[]
+    variable.append( f'charge_point_connection.get_diagnostic_log_request({log},"{log_type}",{request_id})')
+    return asyncio.run(sync_client_server_websocket(variable,[]))
 def diagnosticGetMonitoringReport(request_id,monitoring_criteria, component_variables):
-    var1 = f'cp.get_diagnostic_monitoring_report_request({request_id},{monitoring_criteria},{component_variables})'
-    variable.append(var1)
+    variable =[]
+    var = f'charge_point_connection.get_diagnostic_monitoring_report_request({request_id},{monitoring_criteria},{component_variables})'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
 def diagnosticSetMonitoringBase(monitoring_base):
-    var2= f'cp.set_monitoring_base("{monitoring_base}")'
-    variable.append(var2)
+    variable =[]
+    var= f'charge_point_connection.set_monitoring_base("{monitoring_base}")'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
 def diagnosticSetVariableMonitoring(monitoring_data):
-    var3= f'cp.set_monitoring_variable({monitoring_data})'
-    variable.append(var3)
+    variable =[]
+    var= f'charge_point_connection.set_monitoring_variable({monitoring_data})'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
+
 def diagnosticSetMonitoringLevel(severity):
-    var4= f'cp.set_monitoring_level({severity})'
-    variable.append(var4)
+    variable =[]
+    var= f'charge_point_connection.set_monitoring_level({severity})'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
+
 def diagnosticClearMonitoringVariable(id):
-    var5= f'cp.clear_variable_monitoring({id})'
-    variable.append(var5)
+    variable =[]
+    var= f'charge_point_connection.clear_variable_monitoring({id})'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
+
 def diagnosticCustomerInformation(request_id,report,clear):
-    var6= f'cp.get_diagnostic_customer_information({request_id},{report},{clear})'
-    variable.append(var6)
+    variable =[]
+    var= f'charge_point_connection.get_diagnostic_customer_information({request_id},{report},{clear})'
+    variable.append(var)
+    return asyncio.run(sync_client_server_websocket(variable,[]))
 
-
-# diagnosticGetLogRequest({'remoteLocation':"remote.log"},"DiagnosticsLog",1)
-# diagnosticGetMonitoringReport(1,["ThresholdMonitoring","DeltaMonitoring","PeriodicMonitoring"],[{"component":{"name":"Yukta"}}])
-# diagnosticSetMonitoringBase("All")
-# diagnosticSetVariableMonitoring([{'value':15,'type':"LowerThreshold",'severity':2,'component':{"name" :"helloThere"},'variable':{'name':"variable"}}])
-# diagnosticClearMonitoringVariable([3])
-# diagnosticSetMonitoringLevel(2)
-# diagnosticCustomerInformation(1,True,False)

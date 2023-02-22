@@ -1,5 +1,4 @@
 import logging
-
 import sys
 sys.path.append('../../../')
 from ocpp.routing import on
@@ -16,11 +15,18 @@ class ChargePoint(cp):
         print("Receive for a Event Transaction")
         total_cost= None
         charging_priority = None
-        id_token_info= None
+        id_token_info= {"status":"Accepted"}
         updated_personal_message = None
         if event_type=="Started":
-            if "stopped_reason" in transaction_info and transaction_info["stopped_reason"]=="EVDisconnected":
+            if "stopped_reason" in transaction_info:
                 updated_personal_message={"format":"UTF8","content":"Disconnected"}
+                id_token_info= {"status":"Blocked"}
+            if offline==True or id_token["id_token"]=="NoAuthorization":
+                id_token_info= {"status":"Unknown"}
+        if event_type=="Ended":
+            id_token_info= {"status":"Blocked"}
+            updated_personal_message={"format":"UTF8","content":"Transaction Ended"}
+
         return call_result.TransactionEventPayload(
             total_cost= total_cost,
             charging_priority = charging_priority,
@@ -28,9 +34,9 @@ class ChargePoint(cp):
             updated_personal_message = updated_personal_message
         )
 
-    async def get_transaction_transaction_status(self):
+    async def get_transaction_transaction_status(self, transaction_id):
         request = call.GetTransactionStatusPayload(
-            transaction_id="2")
+            transaction_id=transaction_id)
         response = await self.call(request)
         print("Call for status of transaction")
         print(response)

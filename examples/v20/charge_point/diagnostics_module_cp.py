@@ -74,7 +74,7 @@ class ChargePoint(cp):
                     "variable":set_monitoring_data[0]["variable"]
                 }])
     @on('SetMonitoringLevel')
-    def on_diagnostic_customer_imformation(self ,severity):
+    def on_diagnostic_set_monitoring_level(self ,severity):
         print("monitor level is set")
         if severity<0 or severity>9:
             return call_result.SetMonitoringLevelPayload(
@@ -85,12 +85,12 @@ class ChargePoint(cp):
                 status="Accepted"
             )
     @on('ClearVariableMonitoring')
-    def on_diagnostic_customer_imformation(self ,id):
+    def on_diagnostic_clear_variable_monitoring(self, id):
         print("cleared monitoring level")
         return call_result.ClearVariableMonitoringPayload(
-            status="Accepted",
-            id = id
+            clear_monitoring_result=[{"status":"Accepted" , "id":id[0]}]
         )
+    
     async def send_diagnostic_notify_monitoring_report_request(self,request_id,seq_no,generated_at):
         print("Send logging status notification")
         request = call.NotifyMonitoringReportPayload(
@@ -110,7 +110,7 @@ class ChargePoint(cp):
             )
         response = await self.call(request)
     @on('CustomerInformation')
-    def on_diagnostic_customer_imformation(self ,request_id, report, clear):
+    def on_diagnostic_customer_iformation(self ,request_id, report, clear):
         print("receive for Customer Info")
         return call_result.CustomerInformationPayload(
             status="Accepted"
